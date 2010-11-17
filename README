@@ -1,0 +1,16 @@
+
+_|______________|_____________
+      |                  |       
+   	ReplShard     	ReplShard        
+	    /  \        	  /  \
+	 LeafA LeafB   	LeafA LeafB
+	
+	
+	
+	
+	query->A
+	
+	query->B
+	
+	
+	hash par

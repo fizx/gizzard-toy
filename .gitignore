@@ -1,0 +1,6 @@
+build
+lib_managed
+dist
+target
+boot
+src_managed
