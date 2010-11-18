@@ -4,7 +4,7 @@ import javax.servlet.http._
 import com.twitter.json.Json
 import org.apache.commons.io.IOUtils
 
-class ToyServlet(service: ToyService) extends HttpServlet {
+class ToyServlet(service: Shard) extends HttpServlet {
 	override def doGet(req: HttpServletRequest, rsp: HttpServletResponse) = {
 		val query = req.getParameter("q")
 		val local = req.getParameter("local") != null

@@ -9,7 +9,7 @@ class ConfiguredNameServer[T <: shards.Shard](
              repo: ShardRepository[T], 
              mapper:(Long) => Long) 
              extends NameServer[T](shard, repo, mapper) {
-  def this(config: NameServerConfiguration[T]) = this(config.shard, config.shardRepository, config.mappingFunction)
+  def this(config: NameServerConfiguration[T]) = this(config.shard, new BasicShardRepository[T](config.adapter, None), config.mappingFunction)
   
   def addShardType(shard: (String, ShardFactory[T])) = repo += shard
 }

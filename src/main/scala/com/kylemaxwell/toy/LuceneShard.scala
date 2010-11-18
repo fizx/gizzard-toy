@@ -14,16 +14,16 @@ import com.twitter.gizzard.shards.ShardInfo
 class LuceneShardFactory(host: String) extends com.twitter.gizzard.shards.ShardFactory[Shard] {
   
   def instantiate(shardInfo: ShardInfo, weight: Int, children: Seq[Shard]): Shard = {
-    new LuceneShard(shardInfo)
+    new LuceneShard(shardInfo, weight, children)
   } 
   
   def materialize(shardInfo: ShardInfo) = {
-    new LuceneShard(shardInfo).initialize()
+    new LuceneShard(shardInfo, 0, Seq()).initialize()
   }
 }
 
-class LuceneShard(info: ShardInfo) extends toy.Shard {
-  val path = info.tablePrefix
+class LuceneShard(val shardInfo: ShardInfo, val weight: Int, val children: Seq[Shard]) extends toy.Shard {
+  val path = shardInfo.tablePrefix
   var dir = FSDirectory.open(new File(path))
   var reader = new IndexSearcher(dir)
   val analyzer = new StandardAnalyzer(Version.LUCENE_CURRENT)
@@ -48,6 +48,7 @@ class LuceneShard(info: ShardInfo) extends toy.Shard {
     writer.addDocument(doc)
     save
   }
+  def putNow = put
   
   def delete(key: String) =  {
     writer.deleteDocuments(new TermQuery(new Term("key", key)))

@@ -16,11 +16,12 @@ object Toy {
 	  val port = args(1).toInt
 	  
 	  //Configuration
-    val config = new SimpleLocalGizzardConfiguration("toy_test", "/tmp/toy")
+    val config = new SimpleLocalGizzardConfiguration("toy_test", "/tmp/toy", toy.AdapterFactory)
     config.addShardType("com.kylemaxwell.toy.LuceneShard" -> new LuceneShardFactory(host))
     	  
 	  // Instantiate and start the service
-		val service = new ToyService(host, config).started()
+		val service = new ToyService(config)
+    service.start()
 	  
 		
 		// Bind it to a servlet/web service.
