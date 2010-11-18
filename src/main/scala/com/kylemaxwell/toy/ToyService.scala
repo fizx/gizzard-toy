@@ -15,7 +15,7 @@ class ToyService(config: GizzardConfiguration[Shard]) extends Service[Shard](con
   
   def putNow(key: String, value: String) = findCurrentForwarding(DEFAULT, hash(key)).put(key, value)
   
-  def get(key: String): String = findCurrentForwarding(DEFAULT, hash(key)).get(key)
+  def get(key: String) = findCurrentForwarding(DEFAULT, hash(key)).get(key)
   
   def delete(key: String): Unit = scheduler(Delete(key))
   

@@ -48,7 +48,16 @@ class LuceneShard(val shardInfo: ShardInfo, val weight: Int, val children: Seq[S
     writer.addDocument(doc)
     save
   }
-  def putNow = put
+  
+  def get(key: String) = {
+    val docs = reader.search(parser.parse("key:"+key), 1)
+    if(docs.scoreDocs.length == 0) { 
+      None
+    } else {
+      val doc = docs.scoreDocs(0)
+      Some(reader.doc(doc.doc).get("text"))
+    }
+  }
   
   def delete(key: String) =  {
     writer.deleteDocuments(new TermQuery(new Term("key", key)))

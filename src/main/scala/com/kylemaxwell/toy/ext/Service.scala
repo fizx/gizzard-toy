@@ -5,6 +5,9 @@ import com.twitter.gizzard._
 
 abstract class Service[S <: shards.Shard](val config: GizzardConfiguration[S]) {
   self: S => 
+    val children = Seq[S]()
+    val weight = 1
+    val shardInfo = new shards.ShardInfo(getClass.getName, "service", "localhost")
     val nameServer: NameServer[S] = new ConfiguredNameServer[S](config.nameServer)
     val scheduler = StandardQueueScheduler(this, config.scheduler)
   

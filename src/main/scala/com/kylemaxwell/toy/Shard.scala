@@ -7,11 +7,7 @@ trait Shard extends shards.Shard {
   
   def put(key: String, value: String): Unit
 
-  def putNow(key: String, value: String): Unit
-  
-  def get(key: String): String
+  def get(key: String): Option[String]
   
   def delete(key: String): Unit
-  
-  def deleteNow(key: String): Unit
 }
